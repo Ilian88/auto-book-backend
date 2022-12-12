@@ -12,10 +12,10 @@ import java.util.List;
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/cars")
-public class CarContoller {
+public class CarController {
     private final CarService carService;
 
-    public CarContoller(CarService carService) {
+    public CarController(CarService carService) {
         this.carService = carService;
     }
 
@@ -31,5 +31,12 @@ public class CarContoller {
         this.carService.createCar(car);
         
        return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<CarDTO> getCarById(@PathVariable("id") String id) {
+        CarDTO car = this.carService.getCarById(id);
+
+        return ResponseEntity.ok().body(car);
     }
 }

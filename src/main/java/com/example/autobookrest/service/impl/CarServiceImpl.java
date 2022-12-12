@@ -52,4 +52,11 @@ public class CarServiceImpl implements CarService {
 
         this.carRepository.save(carEntity);
     }
+
+    @Override
+    public CarDTO getCarById(String id) {
+        CarEntity car = this.carRepository.findById(Long.parseLong(id)).orElseThrow();
+
+        return modelMapper.map(car, CarDTO.class);
+    }
 }

@@ -5,6 +5,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
 public class CarDTO {
+    private long id;
     private String make;
     private String model;
     private String engine;
@@ -96,6 +97,15 @@ public class CarDTO {
 
     public CarDTO setOwner(String owner) {
         this.owner = owner;
+        return this;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public CarDTO setId(long id) {
+        this.id = id;
         return this;
     }
 }
