@@ -7,6 +7,9 @@ import java.util.List;
 
 public interface CarService {
     List<CarDTO> getCars();
-    void createCar(CarDTO car) throws NoSuchUserException;
+    void createCar(CarDTO car, String onwerUsername) throws NoSuchUserException;
     CarDTO getCarById(String id);
+    void updateCar(String carId, CarDTO carDTO);
+
+    void deleteCar(String id);
 }

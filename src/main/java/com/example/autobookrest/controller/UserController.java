@@ -40,9 +40,7 @@ public class UserController{
 
     @PostMapping("/login")
     public ResponseEntity<UserDTObody> login(@RequestBody LoginDTO loginDTO) {
-        UserDTObody user =  modelMapper.map(
-                loginDTO,
-                UserDTObody.class);
+        UserDTObody user = modelMapper.map(this.userService.findUserByUsername(loginDTO.getUsername()), UserDTObody.class);
 
         return ResponseEntity
                 .ok()

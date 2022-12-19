@@ -50,7 +50,7 @@ public class CarDTO {
         return this;
     }
 
-    @Min(0)
+    @Min(1)
     public double getDisplacement() {
         return displacement;
     }
