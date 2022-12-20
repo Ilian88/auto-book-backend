@@ -2,6 +2,7 @@ package com.example.autobookrest.service.impl;
 
 import com.example.autobookrest.exception.NoSuchUserException;
 import com.example.autobookrest.model.dto.UserDTO;
+import com.example.autobookrest.model.dto.UserDTObody;
 import com.example.autobookrest.model.entity.UserEntity;
 import com.example.autobookrest.model.enums.Role;
 import com.example.autobookrest.repository.UserRepository;
@@ -9,6 +10,9 @@ import com.example.autobookrest.service.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -35,6 +39,16 @@ public class UserServiceImpl implements UserService {
         return this.userRepository.findByUsername(username)
                 .orElseThrow(()-> new NoSuchUserException("There is no such user"));
     }
+
+    @Override
+    public List<UserDTObody> getAllUsers() {
+        return this.userRepository.findAll()
+                .stream().map(user -> {
+                    return modelMapper.map(user, UserDTObody.class);
+                })
+                .collect(Collectors.toList());
+    }
+
 
 //    private void checkIfUserAlreadyExists(UserEntity user) {
 //        this.userRepository

@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
@@ -45,5 +46,12 @@ public class UserController{
         return ResponseEntity
                 .ok()
                 .body(user);
+    }
+
+    @GetMapping("")
+    public ResponseEntity<List<UserDTObody>> getAllUsers() {
+        List<UserDTObody> users = this.userService.getAllUsers();
+
+        return ResponseEntity.ok().body(users);
     }
 }
