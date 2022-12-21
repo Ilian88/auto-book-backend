@@ -1,5 +1,6 @@
 package com.example.autobookrest.controller;
 
+import com.example.autobookrest.model.dto.ChangeUserRoleDTO;
 import com.example.autobookrest.model.dto.LoginDTO;
 import com.example.autobookrest.model.dto.UserDTO;
 import com.example.autobookrest.model.dto.UserDTObody;
@@ -46,6 +47,13 @@ public class UserController{
         return ResponseEntity
                 .ok()
                 .body(user);
+    }
+
+    @PatchMapping("/admin")
+    public ResponseEntity changeRole(@RequestBody ChangeUserRoleDTO user) {
+        this.userService.changeUserRole(user);
+
+        return ResponseEntity.ok().build();
     }
 
     @GetMapping("")

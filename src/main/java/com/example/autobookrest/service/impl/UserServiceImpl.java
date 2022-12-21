@@ -1,6 +1,7 @@
 package com.example.autobookrest.service.impl;
 
 import com.example.autobookrest.exception.NoSuchUserException;
+import com.example.autobookrest.model.dto.ChangeUserRoleDTO;
 import com.example.autobookrest.model.dto.UserDTO;
 import com.example.autobookrest.model.dto.UserDTObody;
 import com.example.autobookrest.model.entity.UserEntity;
@@ -47,6 +48,15 @@ public class UserServiceImpl implements UserService {
                     return modelMapper.map(user, UserDTObody.class);
                 })
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public void changeUserRole(ChangeUserRoleDTO userDetails) {
+        UserEntity user = this.userRepository.findByUsername(userDetails.getUsername()).orElseThrow();
+
+        user.setRole(Role.valueOf(userDetails.getRole()));
+
+        this.userRepository.save(user);
     }
 
 
