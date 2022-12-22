@@ -1,6 +1,7 @@
 package com.example.autobookrest.service.impl;
 
 import com.example.autobookrest.exception.NoSuchUserException;
+import com.example.autobookrest.exception.UserAlreadyExistsException;
 import com.example.autobookrest.model.dto.ChangeUserRoleDTO;
 import com.example.autobookrest.model.dto.UserDTO;
 import com.example.autobookrest.model.dto.UserDTObody;
@@ -13,6 +14,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 @Service
@@ -27,11 +29,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void registerUser(UserDTO userDTO) {
+        checkIfUserAlreadyExists(userDTO);
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         UserEntity user = modelMapper.map(userDTO, UserEntity.class);
         user.setPassword(encoder.encode(user.getPassword()));
         user.setRole(Role.USER);
-//        checkIfUserAlreadyExists(user);
+
         this.userRepository.save(user);
     }
 
@@ -60,10 +63,14 @@ public class UserServiceImpl implements UserService {
     }
 
 
-//    private void checkIfUserAlreadyExists(UserEntity user) {
-//        this.userRepository
-//                .findByUsername(user.getUsername())
-//                .orElseThrow()
-//
-//    }
+    private void checkIfUserAlreadyExists(UserDTO user) {
+         try {
+             this.userRepository
+                     .findByUsername(user.getUsername()).orElseThrow();
+             throw new UserAlreadyExistsException("User with that username already exists");
+         } catch (NoSuchElementException ex) {
+
+         }
+
+    }
 }

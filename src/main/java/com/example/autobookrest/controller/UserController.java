@@ -28,16 +28,10 @@ public class UserController{
 
     @PostMapping("/register")
     public ResponseEntity<UserEntity> registerUser(@RequestBody @Valid UserDTO userDTO) {
-        try {
             this.userService.registerUser(userDTO);
             return ResponseEntity
                     .ok()
                     .build();
-        } catch (Exception ex) {
-            return ResponseEntity
-                    .badRequest()
-                    .build();
-        }
     }
 
     @PostMapping("/login")

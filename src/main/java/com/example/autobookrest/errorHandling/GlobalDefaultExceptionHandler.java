@@ -1,6 +1,7 @@
 package com.example.autobookrest.errorHandling;
 
 import com.example.autobookrest.exception.NoSuchUserException;
+import com.example.autobookrest.exception.UserAlreadyExistsException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -15,8 +16,13 @@ public class GlobalDefaultExceptionHandler {
         return ResponseEntity.badRequest().body(new ApiError(ex.getMessage(), "400", "Username or userId is wrong"));
     }
 
-    @ExceptionHandler(value = {NoSuchElementException.class})
-    public ResponseEntity<ApiError> noSuchCar(NoSuchElementException ex) {
-        return ResponseEntity.notFound().build();
+//    @ExceptionHandler(value = {NoSuchElementException.class})
+//    public ResponseEntity<ApiError> noSuchCar(NoSuchElementException ex) {
+//        return ResponseEntity.notFound().build();
+//    }
+
+    @ExceptionHandler(value = {UserAlreadyExistsException.class})
+    public ResponseEntity<ApiError> userExists(UserAlreadyExistsException ex) {
+        return ResponseEntity.badRequest().body(new ApiError(ex.getMessage(), "400", "User already exists"));
     }
 }
