@@ -6,6 +6,7 @@ import com.example.autobookrest.model.enums.Role;
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "users")
@@ -17,6 +18,10 @@ public class UserEntity extends BaseEntity{
     private Gender gender;
     private Role role;
     private List<CarEntity> cars;
+
+    private Set<Comment> comments;
+
+    private Set<Like> likes;
 
     public UserEntity() {
     }
@@ -79,5 +84,23 @@ public class UserEntity extends BaseEntity{
     public UserEntity setCars(List<CarEntity> cars) {
         this.cars = cars;
         return this;
+    }
+
+    @OneToMany(mappedBy = "owner")
+    public Set<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(Set<Comment> comments) {
+        this.comments = comments;
+    }
+
+    @OneToMany(mappedBy = "owner")
+    public Set<Like> getLikes() {
+        return likes;
+    }
+
+    public void setLikes(Set<Like> likes) {
+        this.likes = likes;
     }
 }

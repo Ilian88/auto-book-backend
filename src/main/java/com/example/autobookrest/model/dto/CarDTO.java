@@ -70,7 +70,7 @@ public class CarDTO {
         return this;
     }
 
-    @Size(max = 100, message = "Url must be max 100 symbols")
+    @Size(max = 300, message = "Url must be max 100 symbols")
     public String getPicURL() {
         return picURL;
     }

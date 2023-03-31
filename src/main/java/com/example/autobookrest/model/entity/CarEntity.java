@@ -75,7 +75,7 @@ public class CarEntity extends BaseEntity{
     }
 
     @Column(name = "pic_url",nullable = false)
-    @Size(max = 100)
+    @Size(max = 300)
     public String getPicURL() {
         return picURL;
     }

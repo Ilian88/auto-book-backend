@@ -16,11 +16,6 @@ public class GlobalDefaultExceptionHandler {
         return ResponseEntity.badRequest().body(new ApiError(ex.getMessage(), "400", "Username or userId is wrong"));
     }
 
-//    @ExceptionHandler(value = {NoSuchElementException.class})
-//    public ResponseEntity<ApiError> noSuchCar(NoSuchElementException ex) {
-//        return ResponseEntity.notFound().build();
-//    }
-
     @ExceptionHandler(value = {UserAlreadyExistsException.class})
     public ResponseEntity<ApiError> userExists(UserAlreadyExistsException ex) {
         return ResponseEntity.badRequest().body(new ApiError(ex.getMessage(), "400", "User already exists"));
