@@ -13,6 +13,9 @@ public class Comment extends BaseEntity {
     private Comment parentComment;
     private Set<Comment> childrenComments;
     private UserEntity owner;
+
+    private CarEntity car;
+
     private Timestamp createdOn;
     private Set<Like> likes;
 
@@ -38,7 +41,7 @@ public class Comment extends BaseEntity {
         return this;
     }
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     public Comment getParentComment() {
         return parentComment;
     }
@@ -47,7 +50,7 @@ public class Comment extends BaseEntity {
         this.parentComment = parentComment;
     }
 
-    @OneToMany(mappedBy = "parentComment")
+    @OneToMany(mappedBy = "parentComment", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     public Set<Comment> getChildrenComments() {
         return childrenComments;
     }
@@ -82,6 +85,15 @@ public class Comment extends BaseEntity {
 
     public void setLikes(Set<Like> likes) {
         this.likes = likes;
+    }
+
+    @ManyToOne()
+    public CarEntity getCar() {
+        return car;
+    }
+
+    public void setCar(CarEntity car) {
+        this.car = car;
     }
 
     private void registerInParentChildren() {

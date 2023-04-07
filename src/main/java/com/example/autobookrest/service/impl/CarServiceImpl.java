@@ -2,27 +2,34 @@ package com.example.autobookrest.service.impl;
 
 import com.example.autobookrest.exception.NoSuchUserException;
 import com.example.autobookrest.model.dto.CarDTO;
+import com.example.autobookrest.model.dto.CommentDTO;
 import com.example.autobookrest.model.entity.CarEntity;
+import com.example.autobookrest.model.entity.Comment;
 import com.example.autobookrest.model.entity.UserEntity;
 import com.example.autobookrest.repository.CarRepository;
 import com.example.autobookrest.service.CarService;
+import com.example.autobookrest.service.CommentService;
 import com.example.autobookrest.service.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
 public class CarServiceImpl implements CarService {
     private final CarRepository carRepository;
     private final UserService userService;
+
+    private final CommentService commentService;
     private final ModelMapper modelMapper;
 
 
-    public CarServiceImpl(CarRepository carRepository, UserService userService, ModelMapper modelMapper) {
+    public CarServiceImpl(CarRepository carRepository, UserService userService, CommentService commentService, ModelMapper modelMapper) {
         this.carRepository = carRepository;
         this.userService = userService;
+        this.commentService = commentService;
         this.modelMapper = modelMapper;
     }
 
@@ -33,6 +40,10 @@ public class CarServiceImpl implements CarService {
                 .map(car ->{
                      CarDTO carDTO = this.modelMapper.map(car, CarDTO.class);
                      carDTO.setOwner(car.getOwner().getUsername());
+
+//                     Set<CommentDTO> comment = commentService.getCommentByCarId(car.getId());
+//                     carDTO.setComments(comment);
+
                      return carDTO;
                     })
                 .collect(Collectors.toList());

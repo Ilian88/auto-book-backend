@@ -1,0 +1,2 @@
+INSERT INTO cars (description, engine_displacement, engine_type, fuel_consumption, make, model, pic_url)
+values ('some car new', 3.0, 'diesel', 9, 'Mercedes', 'Brabus', 'https://i.ytimg.com/vi/L6JJMugre_k/hqdefault.jpg');

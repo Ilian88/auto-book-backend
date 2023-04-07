@@ -3,6 +3,7 @@ package com.example.autobookrest.model.entity;
 import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.Size;
+import java.util.Set;
 
 @Entity
 @Table(name = "cars")
@@ -16,6 +17,7 @@ public class CarEntity extends BaseEntity{
     private String picURL;
     private String description;
     private UserEntity owner;
+    private Set<Comment> comments;
 
     public CarEntity() {
     }
@@ -103,6 +105,16 @@ public class CarEntity extends BaseEntity{
 
     public CarEntity setOwner(UserEntity owner) {
         this.owner = owner;
+        return this;
+    }
+
+    @OneToMany(mappedBy = "car", fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
+    public Set<Comment> getComments() {
+        return comments;
+    }
+
+    public CarEntity setComments(Set<Comment> comments) {
+        this.comments = comments;
         return this;
     }
 }

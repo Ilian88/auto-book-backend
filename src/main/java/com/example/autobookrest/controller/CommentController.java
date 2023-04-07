@@ -1,14 +1,10 @@
 package com.example.autobookrest.controller;
 
 import com.example.autobookrest.model.dto.CommentDTO;
-import com.example.autobookrest.model.entity.Comment;
-import com.example.autobookrest.repository.CommentRepository;
 import com.example.autobookrest.service.CommentService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Set;
 
@@ -23,8 +19,15 @@ public class CommentController {
     }
 
     @GetMapping()
-    public ResponseEntity<Set<CommentDTO>> getAllComments() {
-        Set<CommentDTO> comments = this.commentService.getRootComments();
+    public ResponseEntity<Set<CommentDTO>> getAllRootComments() {
+        Set<CommentDTO> comments = this.commentService.getAllRootComments();
+
+        return ResponseEntity.ok().body(comments);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<CommentDTO> getCommentById(@PathVariable Long id) {
+        CommentDTO comments = this.commentService.getById(id);
 
         return ResponseEntity.ok(comments);
     }

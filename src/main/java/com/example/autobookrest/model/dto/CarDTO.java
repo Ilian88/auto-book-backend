@@ -3,9 +3,10 @@ package com.example.autobookrest.model.dto;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.util.Set;
 
 public class CarDTO {
-    private long id;
+    private Long id;
     private String make;
     private String model;
     private String engine;
@@ -14,6 +15,8 @@ public class CarDTO {
     private String picURL;
     private String description;
     private String owner;
+
+    private Set<CommentDTO> comments;
 
     public CarDTO() {
     }
@@ -100,12 +103,21 @@ public class CarDTO {
         return this;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public CarDTO setId(long id) {
+    public CarDTO setId(Long id) {
         this.id = id;
+        return this;
+    }
+
+    public Set<CommentDTO> getComments() {
+        return comments;
+    }
+
+    public CarDTO setComments(Set<CommentDTO> comments) {
+        this.comments = comments;
         return this;
     }
 }
