@@ -20,10 +20,15 @@ public class CarController {
     }
 
     @GetMapping("")
-    public ResponseEntity<List<CarDTO>> getCars() {
+    public ResponseEntity<List<CarDTO>> getCars(
+            @RequestParam(value = "pageNo", defaultValue = "0", required = false) int pageNo,
+            @RequestParam(value = "pageSize", defaultValue = "5", required = false) int pageSize,
+            @RequestParam(value = "sortBy", defaultValue = "id", required = false) String sortBy,
+            @RequestParam(value = "sortDir", defaultValue = "ASC", required = false) String sortDir
+    ) {
         return ResponseEntity
                 .ok()
-                .body(this.carService.getCars());
+                .body(this.carService.getCars(pageNo, pageSize, sortBy, sortDir));
     }
 
     @GetMapping("/{id}")

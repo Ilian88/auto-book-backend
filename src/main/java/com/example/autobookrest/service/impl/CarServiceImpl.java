@@ -2,15 +2,15 @@ package com.example.autobookrest.service.impl;
 
 import com.example.autobookrest.exception.NoSuchUserException;
 import com.example.autobookrest.model.dto.CarDTO;
-import com.example.autobookrest.model.dto.CommentDTO;
 import com.example.autobookrest.model.entity.CarEntity;
-import com.example.autobookrest.model.entity.Comment;
 import com.example.autobookrest.model.entity.UserEntity;
 import com.example.autobookrest.repository.CarRepository;
 import com.example.autobookrest.service.CarService;
 import com.example.autobookrest.service.CommentService;
 import com.example.autobookrest.service.UserService;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -34,19 +34,17 @@ public class CarServiceImpl implements CarService {
     }
 
     @Override
-    public List<CarDTO> getCars() {
-        return this.carRepository.findAll()
+    public List<CarDTO> getCars(int pageNo, int pageSize, String sortBy, String sortDir) {
+
+        return this.carRepository.findAll(PageRequest.of(pageNo, pageSize, Sort.Direction.valueOf(sortDir), sortBy))
                 .stream()
-                .map(car ->{
+                .map(car -> {
                      CarDTO carDTO = this.modelMapper.map(car, CarDTO.class);
                      carDTO.setOwner(car.getOwner().getUsername());
 
-//                     Set<CommentDTO> comment = commentService.getCommentByCarId(car.getId());
-//                     carDTO.setComments(comment);
-
                      return carDTO;
                     })
-                .collect(Collectors.toList());
+                .toList();
     }
 
     @Override

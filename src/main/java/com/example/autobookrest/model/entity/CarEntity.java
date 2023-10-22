@@ -117,4 +117,17 @@ public class CarEntity extends BaseEntity{
         this.comments = comments;
         return this;
     }
+
+    @Override
+    public String toString() {
+        return "CarEntity{" +
+                "make='" + make + '\'' +
+                ", model='" + model + '\'' +
+                ", engine='" + engine + '\'' +
+                ", displacement=" + displacement +
+                ", fuelConsumtpion=" + fuelConsumtpion +
+                ", picURL='" + picURL + '\'' +
+                ", description='" + description +
+                '}';
+    }
 }

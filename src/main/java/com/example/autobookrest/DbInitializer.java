@@ -9,7 +9,8 @@ import com.example.autobookrest.repository.CarRepository;
 import com.example.autobookrest.repository.CommentRepository;
 import com.example.autobookrest.repository.UserRepository;
 import com.example.autobookrest.service.UserService;
-import org.springframework.boot.CommandLineRunner;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
@@ -19,27 +20,29 @@ import java.util.List;
 import java.util.Set;
 
 @Component
-public class DBInitializer implements CommandLineRunner {
+public class DbInitializer implements Runnable {
+    private static Logger logger = LoggerFactory.getLogger(DbInitializer.class);
     private final UserRepository userRepository;
     private final UserService userService;
 
     private final CarRepository carRepository;
     private final CommentRepository commentRepository;
 
-    public DBInitializer(UserRepository userRepository, UserService userService, CarRepository carRepository, CommentRepository commentRepository) {
+    public DbInitializer(UserRepository userRepository, UserService userService, CarRepository carRepository, CommentRepository commentRepository) {
         this.userRepository = userRepository;
         this.userService = userService;
         this.carRepository = carRepository;
         this.commentRepository = commentRepository;
     }
 
+
     @Override
-    public void run(String... args) throws Exception {
+    public void run() {
         UserEntity user1 = new UserEntity();
         CarEntity carEntity = new CarEntity();
         Comment comment = new Comment();
 
-        if(this.userRepository.count() == 0) {
+        if (this.userRepository.count() == 0) {
             user1.setUsername("ilian88")
                     .setEmail("ilian@abv.bg")
                     .setRole(Role.ADMIN)
@@ -47,9 +50,10 @@ public class DBInitializer implements CommandLineRunner {
                     .setPassword(new BCryptPasswordEncoder().encode("12345"));
 
             this.userRepository.save(user1);
+            logger.debug(String.format("User persisted: %s", user1));
         }
 
-        if (this.carRepository.count() == 0){
+        if (this.carRepository.count() == 0) {
             carEntity.setMake("Mercedes")
                     .setModel("CLK 270")
                     .setDisplacement(2.7)
@@ -60,6 +64,7 @@ public class DBInitializer implements CommandLineRunner {
                     .setComments(Set.of(comment));
 
             this.carRepository.save(carEntity);
+            logger.debug(String.format("Car persisted: %s", carEntity));
         }
 
         if (this.commentRepository.count() == 0) {
@@ -83,7 +88,8 @@ public class DBInitializer implements CommandLineRunner {
                     .setCreatedOn(Timestamp.valueOf(LocalDateTime.now()));
 
             this.commentRepository.saveAll(List.of(comment1, comment, comment2));
+            logger.debug(String.format("Comment persisted: %s", comment1));
+            logger.debug(String.format("Comment persisted: %s", comment2));
         }
-
     }
 }

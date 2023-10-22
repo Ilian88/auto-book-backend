@@ -103,4 +103,18 @@ public class UserEntity extends BaseEntity{
     public void setLikes(Set<Like> likes) {
         this.likes = likes;
     }
+
+    @Override
+    public String toString() {
+        return "UserEntity{" +
+                "username='" + username + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", gender=" + gender +
+                ", role=" + role +
+                ", cars=" + cars +
+                ", comments=" + comments +
+                ", likes=" + likes +
+                '}';
+    }
 }

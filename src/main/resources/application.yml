@@ -1,6 +1,7 @@
 spring:
   datasource:
       driver-class-name: org.postgresql.Driver
+#      url: jdbc:postgresql://db:5432/postgres?useSSL=false
       url: jdbc:postgresql://localhost:5432/postgres?useSSL=false
       username: postgres
       password: 12345
@@ -22,8 +23,9 @@ logging:
       hibernate:
         SQL: DEBUG
         type:
-          descirptor: TRACE
+          descriptor: TRACE
     blog: DEBUG
+    root: debug
 server:
   error:
     whitelabel:

@@ -2,7 +2,6 @@ package com.example.autobookrest.model.entity;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.sql.Timestamp;
 
@@ -11,7 +10,6 @@ import java.sql.Timestamp;
 public class Like extends BaseEntity{
     private UserEntity owner;
     private Timestamp createdOn;
-
     public Like() {
     }
 
